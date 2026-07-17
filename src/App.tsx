@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"
 import { RootLayout } from "@/layouts/RootLayout"
 import { HomePage } from "@/pages/HomePage"
 import { TheFirmPage } from "@/pages/TheFirmPage"
@@ -13,14 +13,15 @@ import { ContactPage } from "@/pages/ContactPage"
 const basename = import.meta.env.BASE_URL.replace(/\/$/, "")
 
 function GHPagesRedirect() {
+  const navigate = useNavigate()
   useEffect(() => {
-    const redirect = sessionStorage.getItem("redirect")
-    if (redirect) {
+    const stored = sessionStorage.getItem("redirect")
+    if (stored) {
       sessionStorage.removeItem("redirect")
-      window.history.replaceState(null, "", redirect)
-      window.dispatchEvent(new PopStateEvent("popstate"))
+      const path = stored.replace(import.meta.env.BASE_URL.replace(/\/$/, ""), "") || "/"
+      navigate(path, { replace: true })
     }
-  }, [])
+  }, [navigate])
   return null
 }
 
