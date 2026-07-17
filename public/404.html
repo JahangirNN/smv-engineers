@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>SMV Engineers</title>
   <script>
-    sessionStorage.redirect = location.pathname + location.search
-    location.replace('/smv-engineers/')
+    var path = location.pathname.replace(/\/smv-engineers/, '')
+    location.replace('/smv-engineers/#' + path + location.search + location.hash)
   </script>
 </head>
 <body></body>

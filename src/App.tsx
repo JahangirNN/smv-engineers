@@ -1,5 +1,4 @@
-import { useEffect } from "react"
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom"
 import { RootLayout } from "@/layouts/RootLayout"
 import { HomePage } from "@/pages/HomePage"
 import { TheFirmPage } from "@/pages/TheFirmPage"
@@ -10,25 +9,9 @@ import { OurClientsPage } from "@/pages/OurClientsPage"
 import { CareersPage } from "@/pages/CareersPage"
 import { ContactPage } from "@/pages/ContactPage"
 
-const basename = import.meta.env.BASE_URL.replace(/\/$/, "")
-
-function GHPagesRedirect() {
-  const navigate = useNavigate()
-  useEffect(() => {
-    const stored = sessionStorage.getItem("redirect")
-    if (stored) {
-      sessionStorage.removeItem("redirect")
-      const path = stored.replace(import.meta.env.BASE_URL.replace(/\/$/, ""), "") || "/"
-      navigate(path, { replace: true })
-    }
-  }, [navigate])
-  return null
-}
-
 export default function App() {
   return (
-    <BrowserRouter basename={basename}>
-      <GHPagesRedirect />
+    <HashRouter>
       <Routes>
         <Route element={<RootLayout />}>
           <Route path="/" element={<HomePage />} />
@@ -41,6 +24,6 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
