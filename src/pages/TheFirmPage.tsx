@@ -1,12 +1,12 @@
 "use client"
 
 import { motion } from "motion/react"
-import { HeroSlider } from "@/components/HeroSlider"
+import { PageHero } from "@/components/PageHero"
 import { TabSystem } from "@/components/TabSystem"
 import { CTASection } from "@/components/CTASection"
 import { img } from "@/lib/assets"
-import { HERO_SLIDES, SITE_NAME, LICENSE_LOGOS, LICENSE_NAMES } from "@/lib/constants"
-import { Target, Eye, Heart, Users, ShieldCheck, Lightbulb, Handshake, Download, Quote } from "lucide-react"
+import { SITE_NAME, LICENSE_LOGOS, LICENSE_NAMES } from "@/lib/constants"
+import { Target, Eye, Heart, Users, ShieldCheck, Lightbulb, Handshake, Download, Quote, Compass } from "lucide-react"
 
 const values = [
   { icon: Heart, title: "Commitment", desc: "Be responsible for our actions with honesty and be committed to our promise" },
@@ -187,7 +187,13 @@ export function TheFirmPage() {
 
   return (
     <>
-      <HeroSlider slides={HERO_SLIDES} />
+      <PageHero
+        eyebrow="About Us"
+        title="The"
+        outline="Firm."
+        lead="SMV Engineers is a full service structural engineering firm with diverse experience in the design of buildings and associated structures — founded in 2007 and serving clients across the USA, UAE and India."
+        icon={Compass}
+      />
 
       <section className="relative overflow-hidden py-20 md:py-28">
         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-brand-50/50 to-transparent pointer-events-none" />
@@ -197,9 +203,6 @@ export function TheFirmPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-brand-800 mb-8 tracking-tight">
-              <span className="text-gradient">The Firm</span>
-            </h1>
             <TabSystem tabs={tabs} />
           </motion.div>
         </div>

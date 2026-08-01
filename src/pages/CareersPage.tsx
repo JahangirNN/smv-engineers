@@ -3,6 +3,7 @@
 import { motion } from "motion/react"
 import { TabSystem } from "@/components/TabSystem"
 import { CTASection } from "@/components/CTASection"
+import { PageHero } from "@/components/PageHero"
 import { JOB_OPENINGS, HR_EMAIL } from "@/lib/constants"
 import { MapPin, Calendar, Briefcase, GraduationCap, BadgeCheck, Send, Compass } from "lucide-react"
 
@@ -124,19 +125,13 @@ export function CareersPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 pt-32 pb-20 md:pt-40 md:pb-28">
-        <div className="relative max-w-7xl mx-auto px-4 md:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-5">
-              <BadgeCheck className="text-accent-400" size={20} />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Careers</h1>
-            <p className="text-brand-200 max-w-2xl leading-relaxed text-lg">
-              Join our team of structural engineering professionals and build the future with us.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Join Us"
+        title="Build Your"
+        outline="Career."
+        lead="Join our team of structural engineering professionals and build the future with us."
+        icon={BadgeCheck}
+      />
 
       <section className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
         <TabSystem tabs={tabs} />

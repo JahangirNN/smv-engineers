@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import { motion } from "motion/react"
 import { CTASection } from "@/components/CTASection"
+import { PageHero } from "@/components/PageHero"
 import { PROJECTS, PROJECT_CATEGORIES } from "@/lib/constants"
 import { FolderKanban } from "lucide-react"
 import type { ProjectCategory } from "@/lib/types"
@@ -20,19 +21,13 @@ export function ProjectsPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 pt-32 pb-20 md:pt-40 md:pb-28">
-        <div className="relative max-w-7xl mx-auto px-4 md:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-5">
-              <FolderKanban className="text-accent-400" size={20} />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Our Projects</h1>
-            <p className="text-brand-200 max-w-3xl leading-relaxed text-lg">
-              We have delivered structural design and engineering solutions to over 100 clients in the last 13 years covering residential, commercial, healthcare, industrial, educational and a variety of other structural landscapes.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Our Portfolio"
+        title="Our"
+        outline="Projects."
+        lead="We have delivered structural design and engineering solutions to over 100 clients in the last 13 years covering residential, commercial, healthcare, industrial, educational and a variety of other structural landscapes."
+        icon={FolderKanban}
+      />
 
       <section className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
         <div className="flex flex-wrap gap-2 mb-10">

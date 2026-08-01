@@ -1,52 +1,62 @@
-import { Link } from "react-router-dom"
-import { Mail, ArrowRight, PenLine } from "lucide-react"
 import { motion } from "motion/react"
+import { Button } from "@/components/Button"
+import { img } from "@/lib/assets"
 import { EMAIL } from "@/lib/constants"
 
 export function CTASection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700">
+    <section className="relative overflow-hidden noise">
+      <img
+        src={img("/images/backgrounds/full_grey.png")}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <img
+        src={img("/images/backgrounds/red_bg_arc.jpg")}
+        alt=""
+        aria-hidden
+        className="absolute -top-20 -right-20 w-[420px] h-[420px] object-cover opacity-90 hidden md:block pointer-events-none"
+      />
+      <div className="absolute inset-0 blueprint-grid pointer-events-none opacity-60" />
+
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="relative max-w-7xl mx-auto px-4 md:px-8 py-20 md:py-28 text-center"
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="relative max-w-7xl mx-auto px-4 md:px-8 py-24 md:py-36"
       >
-        <motion.div
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-400 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-accent-500/25"
-        >
-          <PenLine className="text-white" size={24} />
-        </motion.div>
+        <div className="max-w-3xl">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-12 bg-accent-500" />
+            <span className="text-accent-500 text-[11px] font-semibold uppercase tracking-[0.3em]">
+              Get In Touch
+            </span>
+          </div>
 
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-          Let&apos;s Discuss Your Project
-        </h2>
-        <p className="text-brand-200 max-w-xl mx-auto mb-10 text-lg leading-relaxed">
-          Ready to bring your structural engineering project to life? We&apos;re here to help with innovative, reliable solutions.
-        </p>
+          <h2 className="mt-6 font-display font-bold text-brand-950 tracking-tight leading-[1.02] text-4xl md:text-6xl lg:text-7xl">
+            Let&apos;s Discuss
+            <br />
+            Your <span className="text-outline-ember">Project.</span>
+          </h2>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <motion.a
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            href={`mailto:${EMAIL}`}
-            className="inline-flex items-center gap-2.5 bg-accent-500 hover:bg-accent-400 text-white px-8 py-3.5 rounded-xl font-medium transition-all shadow-lg shadow-accent-500/20 hover:shadow-accent-500/30"
-          >
-            <Mail size={18} />
-            {EMAIL}
-          </motion.a>
-          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2.5 border-2 border-white/20 hover:border-white/50 text-white px-8 py-3.5 rounded-xl font-medium transition-all backdrop-blur-sm"
-            >
+          <p className="mt-7 text-muted text-base md:text-lg leading-relaxed max-w-xl">
+            Looking to collaborate with a reliable structural engineering firm across the
+            USA, UAE or India? Write to us and we&apos;ll get back within one working day.
+          </p>
+
+          <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <Button to="/contact" variant="ember">
               Contact Us
-              <ArrowRight size={18} />
-            </Link>
-          </motion.div>
+            </Button>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="font-display font-semibold text-brand-900 text-sm tracking-wider uppercase underline decoration-accent-500 decoration-2 underline-offset-8 hover:text-accent-600 transition-colors"
+            >
+              {EMAIL}
+            </a>
+          </div>
         </div>
       </motion.div>
     </section>
