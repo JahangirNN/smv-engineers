@@ -15,8 +15,8 @@ import slickLeft from "@/assets/icons/slick_left.svg"
 import slickRight from "@/assets/icons/slick_right.svg"
 import { IntroLoader } from "@/components/IntroLoader"
 import { BlueprintDrawing } from "@/components/BlueprintDrawing"
+import { ProjectShowcase } from "@/components/ProjectShowcase"
 import { CTASection } from "@/components/CTASection"
-import { ProjectCard } from "@/components/ProjectCard"
 import { SectionHeading } from "@/components/SectionHeading"
 import { CurvedLink } from "@/components/CurvedLink"
 import { Button } from "@/components/Button"
@@ -103,8 +103,6 @@ export function HomePage() {
       heroApi.off("reInit", onHeroSelect)
     }
   }, [heroApi, onHeroSelect])
-
-  const [projectsRef, projectsApi] = useEmblaCarousel({ loop: true, align: "start" }, [Autoplay({ delay: 4500, stopOnInteraction: true })])
 
   const activeSlide = HERO_SLIDES[heroIndex] ?? HERO_SLIDES[0]!
 
@@ -382,9 +380,9 @@ export function HomePage() {
       </section>
 
       {/* ============ FEATURED PROJECTS ============ */}
-      <section className="relative overflow-hidden py-20 md:py-32">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <section className="relative overflow-hidden min-h-[100svh] flex flex-col justify-center py-16 md:py-20">
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-12">
             <SectionHeading
               eyebrow="Featured Work"
               title="Projects That"
@@ -396,34 +394,9 @@ export function HomePage() {
             </Reveal>
           </div>
 
-          <div className="relative">
-            <div ref={projectsRef} className="embla__viewport overflow-hidden -mx-2 px-2">
-              <div className="embla__container flex gap-6">
-                {FEATURED_PROJECTS.map((project, i) => (
-                  <div key={project.name} className="embla__slide flex-[0_0_85%] sm:flex-[0_0_45%] lg:flex-[0_0_31%] min-w-0">
-                    <ProjectCard {...project} index={i} />
-                  </div>
-                ))}
-              </div>
-            </div>
+          <ProjectShowcase projects={FEATURED_PROJECTS} />
 
-            <button
-              onClick={() => projectsApi?.scrollPrev()}
-              aria-label="Previous projects"
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-border shadow-lg hover:bg-accent-500 hover:border-accent-500 transition-all flex items-center justify-center z-10"
-            >
-              <img src={slickLeft} alt="" className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => projectsApi?.scrollNext()}
-              aria-label="Next projects"
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-border shadow-lg hover:bg-accent-500 hover:border-accent-500 transition-all flex items-center justify-center z-10"
-            >
-              <img src={slickRight} alt="" className="w-5 h-5" />
-            </button>
-          </div>
-
-          <Reveal className="mt-10 md:hidden">
+          <Reveal className="mt-8 md:hidden">
             <CurvedLink to="/projects">All Projects</CurvedLink>
           </Reveal>
         </div>
