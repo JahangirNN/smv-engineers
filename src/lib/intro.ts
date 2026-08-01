@@ -1,4 +1,8 @@
-export const INTRO_CURTAIN_MS = 3450
+let introFinished = false
+let resolveIntro: (() => void) | null = null
+const introReadyPromise = new Promise<void>((resolve) => {
+  resolveIntro = resolve
+})
 
 export function willPlayIntro(): boolean {
   if (typeof window === "undefined") return false
@@ -8,4 +12,14 @@ export function willPlayIntro(): boolean {
   } catch {
     return true
   }
+}
+
+export function finishIntro(): void {
+  if (introFinished) return
+  introFinished = true
+  resolveIntro?.()
+}
+
+export function introReady(): Promise<void> {
+  return introReadyPromise
 }

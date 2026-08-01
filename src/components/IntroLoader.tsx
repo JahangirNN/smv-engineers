@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence, animate } from "motion/react"
 import { BlueprintDrawing } from "@/components/BlueprintDrawing"
+import { finishIntro } from "@/lib/intro"
 
 const STORAGE_KEY = "smv_intro_seen"
 const WORDMARK = "SMV ENGINEERS"
@@ -17,6 +18,7 @@ export function IntroLoader() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduced || sessionStorage.getItem(STORAGE_KEY) === "1") {
       sessionStorage.setItem(STORAGE_KEY, "1")
+      finishIntro()
       return
     }
     setPhase("content")
@@ -37,12 +39,13 @@ export function IntroLoader() {
 
   useEffect(() => {
     if (phase !== "curtains") return
-    const timer = setTimeout(() => setPhase("exit"), 1650)
+    const timer = setTimeout(() => setPhase("exit"), 800)
     return () => clearTimeout(timer)
   }, [phase])
 
   useEffect(() => {
     if (phase !== "exit") return
+    finishIntro()
     const timer = setTimeout(() => setPhase("done"), 2600)
     return () => clearTimeout(timer)
   }, [phase])

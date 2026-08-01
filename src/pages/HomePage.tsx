@@ -24,7 +24,7 @@ import { StatCounter } from "@/components/StatCounter"
 import { Marquee } from "@/components/Marquee"
 import { Reveal } from "@/components/Reveal"
 import { img } from "@/lib/assets"
-import { willPlayIntro, INTRO_CURTAIN_MS } from "@/lib/intro"
+import { willPlayIntro, introReady } from "@/lib/intro"
 import { HERO_SLIDES, FEATURED_PROJECTS, CLIENTS } from "@/lib/constants"
 
 const servicesData = [
@@ -59,7 +59,17 @@ function MaskLine({ children, delay }: { children: ReactNode; delay: number }) {
 
 export function HomePage() {
   const heroRef = useRef<HTMLElement>(null)
-  const introDelay = willPlayIntro() ? INTRO_CURTAIN_MS : 0
+  const [heroReady, setHeroReady] = useState(!willPlayIntro())
+
+  useEffect(() => {
+    let alive = true
+    introReady().then(() => {
+      if (alive) setHeroReady(true)
+    })
+    return () => {
+      alive = false
+    }
+  }, [])
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -137,12 +147,14 @@ export function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-4 md:px-8 pt-32 md:pt-40 pb-28 md:pb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div style={{ y: yLeft, opacity: heroOpacity }}>
-            <motion.div
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: introDelay + 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-3"
-            >
+            {heroReady && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center gap-3"
+                >
               <span className="h-px w-12 bg-accent-500" />
               <span className="text-accent-400 text-[11px] font-semibold uppercase tracking-[0.3em]">
                 SMV Engineers — Est. 2007
@@ -150,9 +162,9 @@ export function HomePage() {
             </motion.div>
 
             <h1 className="mt-6 font-display font-bold text-white tracking-tight leading-[0.98] text-[13vw] sm:text-6xl lg:text-7xl xl:text-[5.2rem]">
-              <MaskLine delay={introDelay + 0.35}>Complex</MaskLine>
-              <MaskLine delay={introDelay + 0.47}>Structures,</MaskLine>
-              <MaskLine delay={introDelay + 0.59}>
+              <MaskLine delay={0.35}>Complex</MaskLine>
+              <MaskLine delay={0.47}>Structures,</MaskLine>
+              <MaskLine delay={0.59}>
                 <span className="text-outline-light">Simple</span>{" "}
                 <span className="text-gradient-ember">Solutions.</span>
               </MaskLine>
@@ -161,7 +173,7 @@ export function HomePage() {
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: introDelay + 0.82, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.7, delay: 0.82, ease: [0.22, 1, 0.36, 1] }}
               className="mt-7 text-brand-200 text-base md:text-lg leading-relaxed max-w-xl"
             >
               Full-service structural engineering across the USA, India and UAE — from
@@ -172,7 +184,7 @@ export function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: introDelay + 0.95, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.7, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
               className="mt-9 flex flex-wrap items-center gap-8"
             >
               <Button to="/projects" variant="ember">
@@ -186,10 +198,10 @@ export function HomePage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: introDelay + 1.1 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
               className="mt-10"
             >
-              <BlueprintDrawing className="w-56 text-white/35" delay={introDelay + 1.15} strokeWidth={1.1} />
+              <BlueprintDrawing className="w-56 text-white/35" delay={1.15} strokeWidth={1.1} />
             </motion.div>
 
             <motion.div
@@ -204,15 +216,18 @@ export function HomePage() {
                 </span>
                 {activeSlide.caption}
               </p>
-            </motion.div>
+              </motion.div>
+              </>
+            )}
           </motion.div>
 
           <motion.div style={{ y: yRight, opacity: heroOpacity }} className="relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: introDelay + 0.5, ease: [0.22, 1, 0.36, 1] }}
-            >
+            {heroReady && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
               <motion.div
                 onMouseMove={onPanelMove}
                 onMouseLeave={onPanelLeave}
@@ -264,7 +279,8 @@ export function HomePage() {
               <p className="absolute -bottom-9 right-1 font-display font-bold text-[96px] leading-none text-outline-light opacity-20 pointer-events-none select-none hidden lg:block">
                 {String(heroIndex + 1).padStart(2, "0")}
               </p>
-            </motion.div>
+              </motion.div>
+            )}
 
             {/* scale bar */}
             <div className="hidden lg:flex absolute -bottom-7 left-0 items-end gap-3 pointer-events-none">
