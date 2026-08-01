@@ -17,6 +17,7 @@ export interface Project {
   name: string
   location: string
   category: ProjectCategory
+  image?: string
 }
 
 export type ProjectCategory =

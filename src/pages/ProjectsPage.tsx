@@ -74,20 +74,36 @@ export function ProjectsPage() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
               >
                 {filtered.map((project, i) => (
                   <motion.div
                     key={`${project.name}-${i}`}
                     variants={itemVariants}
-                    className="bg-white rounded-xl px-5 py-4 shadow-sm border border-border/50 card-hover flex items-start gap-3"
+                    className="bg-white rounded-2xl shadow-sm border border-border/50 overflow-hidden card-hover flex flex-col"
                   >
-                    <div className="w-2 h-2 rounded-full bg-accent-500/40 mt-2 shrink-0" />
-                    <div>
-                      <p className="font-medium text-brand-800 text-sm">{project.name}</p>
-                      {project.location && (
-                        <p className="text-xs text-muted mt-0.5">{project.location}</p>
-                      )}
+                    {project.image ? (
+                      <div className="relative aspect-[16/10] overflow-hidden bg-brand-100">
+                        <img
+                          src={project.image}
+                          alt={project.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="aspect-[16/10] bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center">
+                        <FolderKanban className="text-accent-400/60" size={28} />
+                      </div>
+                    )}
+                    <div className="px-5 py-4 flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-accent-500/40 mt-2 shrink-0" />
+                      <div>
+                        <p className="font-medium text-brand-800 text-sm leading-snug">{project.name}</p>
+                        {project.location && (
+                          <p className="text-xs text-muted mt-1">{project.location}</p>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
                 ))}
