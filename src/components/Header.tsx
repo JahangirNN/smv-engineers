@@ -24,9 +24,7 @@ export function Header() {
         scrolled ? "glass-dark shadow-lg shadow-brand-950/40" : "bg-gradient-to-b from-brand-950/70 to-transparent"
       }`}
     >
-      <div className={`hidden md:flex justify-between items-center px-6 py-1.5 border-b ${
-        scrolled ? "border-white/10" : "border-white/10"
-      }`}>
+      <div className="hidden md:flex justify-between items-center px-6 py-1.5 border-b border-white/10">
         <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/50">
           Est. 2007 — Structural Engineering
         </span>

@@ -35,6 +35,12 @@ export function IntroLoader() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!exiting) return
+    const timer = setTimeout(() => setGone(true), 2000)
+    return () => clearTimeout(timer)
+  }, [exiting])
+
   const skip = () => {
     if (exiting) return
     sessionStorage.setItem(STORAGE_KEY, "1")
@@ -44,7 +50,7 @@ export function IntroLoader() {
   if (!mounted || gone) return null
 
   return (
-    <AnimatePresence onExitComplete={() => setGone(true)}>
+    <AnimatePresence>
       {!exiting ? (
         <motion.div
           key="intro-content"

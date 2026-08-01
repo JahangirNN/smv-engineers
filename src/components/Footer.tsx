@@ -95,11 +95,6 @@ export function Footer() {
           <p className="text-brand-400 text-xs">
             &copy; {new Date().getFullYear()} {SITE_NAME} All Rights Reserved.
           </p>
-          <div className="flex items-center gap-4 text-xs text-brand-400">
-            <Link to="/privacy" className="hover:text-accent-400 transition-colors">Privacy Policy</Link>
-            <span>|</span>
-            <Link to="/terms" className="hover:text-accent-400 transition-colors">Terms & Conditions</Link>
-          </div>
           <button
             onClick={scrollToTop}
             className="flex items-center gap-2 text-brand-300 hover:text-accent-400 text-xs transition-colors group"

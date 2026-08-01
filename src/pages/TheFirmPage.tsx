@@ -146,7 +146,7 @@ export function TheFirmPage() {
             </p>
           </div>
           <a
-            href="/pdfs/SMVE_Presentation_Plant_Design.pdf"
+            href="pdfs/SMVE_Presentation_Plant_Design.pdf"
             className="inline-flex items-center gap-2 text-accent-500 hover:text-accent-400 font-medium transition-colors bg-accent-50 px-5 py-3 rounded-xl"
             target="_blank"
             rel="noopener noreferrer"

@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { useState } from "react"
 import { Send, Upload, CheckCircle2 } from "lucide-react"
 import { motion } from "motion/react"
 
@@ -24,6 +25,7 @@ interface ContactFormProps {
 }
 
 export function ContactForm({ categories, successMessage = "Thank you for your inquiry!", submitLabel = "Submit" }: ContactFormProps) {
+  const [fileName, setFileName] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
@@ -104,10 +106,16 @@ export function ContactForm({ categories, successMessage = "Thank you for your i
 
       <div>
         <label className={labelClass}>Attachment</label>
-        <div className="flex items-center gap-3 px-4 py-3 border-2 border-dashed border-border hover:border-accent-300 rounded-xl text-muted text-sm cursor-pointer transition-colors bg-white/50">
-          <Upload size={16} className="text-accent-500" />
-          <span>Upload file (optional) — PDF, DOC, or image</span>
-        </div>
+        <label className="flex items-center gap-3 px-4 py-3 border-2 border-dashed border-border hover:border-accent-300 rounded-xl text-muted text-sm cursor-pointer transition-colors bg-white/50">
+          <Upload size={16} className="text-accent-500 shrink-0" />
+          <span className="truncate">{fileName ?? "Upload file (optional) — PDF, DOC, or image"}</span>
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx,image/*"
+            className="sr-only"
+            onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+          />
+        </label>
       </div>
 
       <div>
