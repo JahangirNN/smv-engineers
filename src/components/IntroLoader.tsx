@@ -23,14 +23,14 @@ export function IntroLoader() {
     }
     setPhase("content")
     const controls = animate(0, 100, {
-      duration: 2.1,
+      duration: 2.3,
       ease: "easeInOut",
       onUpdate: (v) => setProgress(Math.round(v))
     })
     const timer = setTimeout(() => {
       sessionStorage.setItem(STORAGE_KEY, "1")
       setPhase("curtains")
-    }, 2400)
+    }, 2500)
     return () => {
       controls.stop()
       clearTimeout(timer)
@@ -39,14 +39,14 @@ export function IntroLoader() {
 
   useEffect(() => {
     if (phase !== "curtains") return
+    finishIntro()
     const timer = setTimeout(() => setPhase("exit"), 800)
     return () => clearTimeout(timer)
   }, [phase])
 
   useEffect(() => {
     if (phase !== "exit") return
-    finishIntro()
-    const timer = setTimeout(() => setPhase("done"), 2600)
+    const timer = setTimeout(() => setPhase("done"), 3000)
     return () => clearTimeout(timer)
   }, [phase])
 
@@ -126,19 +126,19 @@ export function IntroLoader() {
           <motion.div
             key="intro-curtains"
             className="fixed inset-0 z-[100] pointer-events-none"
-            exit={{ opacity: 0, transition: { delay: 0.85, duration: 0.35 } }}
+            exit={{ opacity: 0, transition: { delay: 1.5, duration: 0.4 } }}
           >
             <motion.div
               className="absolute inset-x-0 top-0 h-1/2 bg-brand-950"
               initial={false}
               exit={{ y: "-101%" }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+              transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1] }}
             />
             <motion.div
               className="absolute inset-x-0 bottom-0 h-1/2 bg-brand-950"
               initial={false}
               exit={{ y: "101%" }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+              transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1] }}
             />
           </motion.div>
         )}
