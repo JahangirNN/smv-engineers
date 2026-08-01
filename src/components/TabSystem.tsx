@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, type ReactNode } from "react"
-import { motion, AnimatePresence } from "motion/react"
+import { motion } from "motion/react"
 
 interface Tab {
   label: string
@@ -41,17 +41,14 @@ export function TabSystem({ tabs, defaultIndex = 0, className = "" }: TabSystemP
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={active}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-        >
-          {tabs[active]?.content}
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        key={active}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+      >
+        {tabs[active]?.content}
+      </motion.div>
     </div>
   )
 }

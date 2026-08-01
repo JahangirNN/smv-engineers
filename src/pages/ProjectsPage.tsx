@@ -1,21 +1,11 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { motion, AnimatePresence } from "motion/react"
+import { motion } from "motion/react"
 import { CTASection } from "@/components/CTASection"
 import { PROJECTS, PROJECT_CATEGORIES } from "@/lib/constants"
 import { FolderKanban } from "lucide-react"
 import type { ProjectCategory } from "@/lib/types"
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.02 } }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0 }
-}
 
 export function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | "All">("All")
@@ -61,64 +51,51 @@ export function ProjectsPage() {
           ))}
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3 }}
-          >
-            {filtered.length > 0 ? (
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-              >
-                {filtered.map((project, i) => (
-                  <motion.div
-                    key={`${project.name}-${i}`}
-                    variants={itemVariants}
-                    className="bg-white rounded-2xl shadow-sm border border-border/50 overflow-hidden card-hover flex flex-col"
-                  >
-                    {project.image ? (
-                      <div className="relative aspect-[16/10] overflow-hidden bg-brand-100">
-                        <img
-                          src={project.image}
-                          alt={project.name}
-                          loading="lazy"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="aspect-[16/10] bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center">
-                        <FolderKanban className="text-accent-400/60" size={28} />
-                      </div>
-                    )}
-                    <div className="px-5 py-4 flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-accent-500/40 mt-2 shrink-0" />
-                      <div>
-                        <p className="font-medium text-brand-800 text-sm leading-snug">{project.name}</p>
-                        {project.location && (
-                          <p className="text-xs text-muted mt-1">{project.location}</p>
-                        )}
-                      </div>
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
+        >
+          {filtered.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {filtered.map((project, i) => (
+                <div
+                  key={`${project.name}-${i}`}
+                  className="bg-white rounded-2xl shadow-sm border border-border/50 overflow-hidden card-hover flex flex-col"
+                >
+                  {project.image ? (
+                    <div className="relative aspect-[16/10] overflow-hidden bg-brand-100">
+                      <img
+                        src={project.image}
+                        alt={project.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                  </motion.div>
+                  ) : (
+                    <div className="aspect-[16/10] bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center">
+                      <FolderKanban className="text-accent-400/60" size={28} />
+                    </div>
+                  )}
+                  <div className="px-5 py-4 flex items-start gap-3">
+                    <div className="w-2 h-2 rounded-full bg-accent-500/40 mt-2 shrink-0" />
+                    <div>
+                      <p className="font-medium text-brand-800 text-sm leading-snug">{project.name}</p>
+                      {project.location && (
+                        <p className="text-xs text-muted mt-1">{project.location}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 ))}
-              </motion.div>
+            </div>
             ) : (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center text-muted py-16 bg-white rounded-2xl border border-border/50"
-              >
+              <p className="text-center text-muted py-16 bg-white rounded-2xl border border-border/50">
                 No projects in this category.
-              </motion.p>
+              </p>
             )}
           </motion.div>
-        </AnimatePresence>
       </section>
 
       <CTASection />
